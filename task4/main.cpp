@@ -135,6 +135,14 @@ void collision_detection(
       // ----------------------------------------------
       // write some codes here (probably 5 - 10 lines)
       // use the function "is_collide()" at line #102
+      if(stack.size() != 0){
+        for(auto x: stack){
+          if(is_collide(aCircle[ic0], aCircle[x], 0.03f)){
+            aCircle[ic0].is_collided = true;
+            aCircle[x].is_collided = true;
+          }
+        }
+      }
       // ----------------------------------------------
       stack.insert(ic0);
     }
