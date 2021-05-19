@@ -28,7 +28,7 @@ Run the program and take a screenshot image of the resulting window.
 Paste the screenshot below by editing this markdown document. 
 
 === paset screenshot here ===
-
+![problem1](problem1.png)
 
 
 ## Problem 2
@@ -39,6 +39,7 @@ Fill the code around line #90 to **analytically** compute the graiend and hessia
 Paste the screenshot image of the result below. 
 
 === paset screenshot here ===
+![problem1](problem2.png)
 
 
 
