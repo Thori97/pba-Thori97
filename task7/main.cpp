@@ -69,8 +69,24 @@ void WdWddW_Rotation(
   const Eigen::Vector3d Rp = R*p;
   W = (Rp-q).squaredNorm();
   // compute gradient and hessian of the energy below.
-  // dW =
-  // ddW =
+  double o1 = 1, o2 = 0, o3 = 0;
+  double theta = 1e-2;
+  double c = 1 - std::cos(theta);
+  double s = std::sin(theta);
+  dW << -2*(2*o1*c*Rp[0]*q[0] + o2*c*(Rp[1]*q[0]+Rp[0]*q[1]) + o3*c*(Rp[0]*q[2]+Rp[2]*q[0]) +s*(Rp[1]*q[2]-Rp[2]*q[1])), 
+  -2*(2*o2*c*Rp[1]*q[1] + o1*c*(Rp[1]*q[0]+Rp[0]*q[1]) + o3*c*(Rp[1]*q[2]+Rp[2]*q[1]) +s*(Rp[2]*q[0]-Rp[0]*q[2])),
+  -2*(2*o3*c*Rp[2]*q[2] + o1*c*(Rp[0]*q[2]+Rp[2]*q[0]) + o2*c*(Rp[1]*q[2]+Rp[2]*q[1]) +s*(Rp[0]*q[1]-Rp[1]*q[0]));
+
+  ddW << 
+  -2*2*c*Rp[0]*q[0],
+  -2*c*(Rp[1]*q[0]+Rp[1]*q[2]),
+  -2*c*(Rp[0]*q[2]+Rp[2]*q[0]), 
+  -2*c*(Rp[1]*q[0]+q[1]*Rp[0]),
+  -2*2*c*Rp[1]*q[1], 
+  -2*c*(Rp[1]*q[2]+Rp[2]*q[1]), 
+  -2*c*(Rp[0]*q[2]+Rp[2]*q[0]), 
+  -2*c*(Rp[1]*q[2]+Rp[2]*q[1]), 
+  -2*2*c*Rp[2]*q[2];
 }
 
 /**
