@@ -32,7 +32,7 @@ Compile the `main.cpp` using the `CMakeLists.txt`, run the program and take a sc
 Paste the image below.
 
 === paste screenshot here ===
-
+![](problem1.png)
 
 
 ## Problem 2
@@ -44,7 +44,7 @@ The edits should be necessary only around line #123.
 Paste the screenshot image of the program once it is finished.
 
 === paste screenshot here ===
-
+![](problem2.png)
 
 ## Material 
 

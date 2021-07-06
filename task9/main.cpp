@@ -122,8 +122,24 @@ int main()
             aMass[aQuad[iq*4+3]] };
         // write some code below to rigidly transform the points in the rest shape (`aq`) such that the
         // weighted sum of squared distances against the points in the tentative shape (`qp`) is minimized (`am` is the weight).
-
-
+        Eigen::Vector2f t_cg(0, 0);
+        Eigen::Vector2f T_cg(0, 0);
+        for(int i=0;i<4;i++){
+          t_cg += (am[i]*ap[i])/(am[0]+am[1]+am[2]+am[3]);
+          T_cg += (am[i]*aq[i])/(am[0]+am[1]+am[2]+am[3]);
+        }
+        Eigen::Matrix2f BAT = Eigen::MatrixXf::Zero(2, 2);
+        for(int i=0;i<4;i++){
+          BAT += am[i]*(ap[i]-t_cg)*(aq[i]-T_cg).transpose();
+        }
+        Eigen::JacobiSVD<Eigen::MatrixXf> svd(BAT, Eigen::ComputeFullU | Eigen::ComputeFullV);
+        Eigen::Matrix2f R_opt = svd.matrixU()*svd.matrixV().transpose();
+        Eigen::Vector2f t_opt = t_cg - R_opt*T_cg;
+        for(int i=0;i<4;i++){
+          Eigen::Vector2f v = R_opt*aq[i]+t_opt;
+          aXYt[2*aQuad[iq*4+i]+0] = v(0);
+          aXYt[2*aQuad[iq*4+i]+1] = v(1);
+        }
         // no edits further down
       }
       for(unsigned int ixy=0;ixy<aXY.size()/2;++ixy) { // update position and velocities
